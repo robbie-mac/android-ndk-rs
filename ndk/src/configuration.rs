@@ -136,7 +136,7 @@ impl Configuration {
     pub fn country(&self) -> String {
         let mut result = "  ".to_owned();
         unsafe {
-            ffi::AConfiguration_getCountry(self.ptr.as_ptr(), result.as_mut_ptr() as *mut _);
+            ffi::AConfiguration_getCountry(self.ptr.as_ptr(), result.as_mut_ptr());
         }
         result
     }
@@ -172,11 +172,11 @@ impl Configuration {
         }
     }
 
-    /// Returns the language, as a `String` of two characters, if a language is set
+    /// Returns the language, as a [`String`] of two characters, if a language is set
     pub fn language(&self) -> Option<String> {
         let mut chars = [0u8; 2];
         unsafe {
-            ffi::AConfiguration_getLanguage(self.ptr.as_ptr(), chars[..].as_mut_ptr() as *mut _);
+            ffi::AConfiguration_getLanguage(self.ptr.as_ptr(), chars.as_mut_ptr());
         }
         if chars[0] == 0 {
             None
